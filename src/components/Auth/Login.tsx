@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import LoadingScreen from '../Basic/LoadingScreen';
 import AlertModal from '../Basic/Alert';
-import { login, loginWithToken } from '../../reducers/auth/authSlice';
+import { login } from '../../reducers/auth/authSlice';
 import { useAppDispatch } from '../../store/hooks';
 
 const Login: React.FC = () => {
@@ -14,40 +14,6 @@ const Login: React.FC = () => {
     const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false);
     const [confirmTitle, setConfirmTitle] = useState<string>('');
     const [confirmDescription, setConfirmDescription] = useState<string>('');
-
-    useEffect(() => {
-        // Check if token exists in localStorage
-        const localStorageToken = localStorage.getItem('token');
-
-        // If no token in localStorage, check URL params for token
-        if (!localStorageToken) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-
-            // If a token exists in URL params, call the loginToken function
-            if (token) {
-                loginToken(token);
-            }
-        }
-    }, []);
-
-    const loginToken = async (token: string) => {
-        setIsLoading(true);
-        try {
-            const message = await dispatch(loginWithToken(token));
-            if (message) {
-                setConfirmTitle(message);
-                setConfirmDescription('');
-                setConfirmModalOpen(true);
-            }
-        } catch (error: any) {
-            setConfirmTitle(error.message);
-            setConfirmDescription('');
-            setConfirmModalOpen(true);
-        } finally {
-            setIsLoading(false);
-        }
-    }
 
     // Validation schema
     const validationSchema = Yup.object({

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../../store/store';
-import { fetchAreaListsAPI, saveAreaListAPI, getAreaListsAPI, ApplicationAreaList } from './areaListAPI';
+import { fetchUserAccessAPI, saveAreaListAPI, getAreaListsAPI, ApplicationAreaList } from './areaListAPI';
 
 interface AreaListState {
     areaLists: ApplicationAreaList[];
@@ -37,10 +37,10 @@ const areaListSlice = createSlice({
 
 export const { resetAreaLists, setAreaLists, selectedAreaLists, updateAreaList } = areaListSlice.actions;
 
-export const fetchAreaLists = () => async (dispatch: AppDispatch) => {
+export const fetchUserAccess = () => async (dispatch: AppDispatch) => {
     try {
-        const response = await fetchAreaListsAPI();
-        dispatch(setAreaLists(response));
+        const response = await fetchUserAccessAPI();
+        dispatch(setAreaLists(response.application_areas));
     } catch (error: any) {
         console.error('Error fetching area lists:', error.response?.data?.message || error.message);
     }

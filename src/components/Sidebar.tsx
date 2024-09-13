@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
-import { fetchAreaLists } from 'src/reducers/areaList/areaListSlice';
+import { fetchUserAccess } from 'src/reducers/areaList/areaListSlice';
 import { useAppDispatch } from 'src/store/hooks';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import { Box, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
@@ -62,7 +62,7 @@ const DashboardSidebar: FC<DashboardSidebarProps> = ({ open }) => {
     const areaList = useSelector((state: RootState) => state.areaList.areaLists);
 
     useEffect(() => {
-        dispatch(fetchAreaLists());
+        dispatch(fetchUserAccess());
     }, [dispatch]);
 
     useEffect(() => {

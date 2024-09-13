@@ -34,7 +34,7 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ open, toggleSidebar }) => {
 
     return (
         <>
-            <AppBar elevation={0}>
+            <AppBar elevation={0} sx={{ border: 0 }}>
                 <Toolbar variant="dense">
                     {sidebarVisible && (
                         <IconButton

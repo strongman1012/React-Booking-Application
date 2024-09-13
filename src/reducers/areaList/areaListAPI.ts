@@ -18,6 +18,8 @@ export interface AreaList {
 export interface ApplicationAreaList {
     application_name: string;
     application_id: number;
+    application_url: string;
+    permission: boolean;
     data: AreaList[];
 }
 

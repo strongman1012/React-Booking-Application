@@ -1,13 +1,18 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useMemo } from 'react';
 import Router from './routes';
 import 'devextreme/dist/css/dx.light.css';
 import { useAppDispatch } from 'src/store/hooks';
 import { initializeAuth, loginWithToken } from 'src/reducers/auth/authSlice';
 import LoadingScreen from './components/Basic/LoadingScreen';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { getTheme } from './utills/theme';
+import ThemeSwitcher from 'src/components/Basic/ThemeSwitcher';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     // Check if token exists in localStorage
@@ -29,6 +34,12 @@ const App: FC = () => {
     }
   }, [dispatch]);
 
+  const theme = useMemo(() => getTheme(darkMode ? 'dark' : 'light'), [darkMode]);
+
+  const handleThemeChange = () => {
+    setDarkMode(!darkMode);
+  };
+
   const loginToken = async (token: string) => {
     setIsLoading(true);
     try {
@@ -45,9 +56,13 @@ const App: FC = () => {
   }
 
   return (
-    <>
-      <Router />
-    </>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ThemeSwitcher darkMode={darkMode} onToggle={handleThemeChange} />
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 
